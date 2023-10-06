@@ -1,0 +1,77 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  font-family: system-ui;
+  content: "this.appendChild(document.createElement('h1')); document.title = 'CSS Calculator';";
+}
+
+h1 {
+  font-size: 2rem;
+  margin-block: 0;
+  content: "this.textContent = 'CSS Calculator'; const description = document.createElement('p'); description.id = 'description'; this.insertAdjacentElement('afterend', description);";
+}
+
+#description {
+  margin-block: 0;
+  margin-top: 0.25rem;
+  content: "this.textContent = 'A calculator made only in a CSS file with '; const link = document.createElement('a'); link.href = 'https://github.com/ajkachnic/js-in-css'; link.textContent = 'JS-in-CSS'; this.appendChild(link); this.appendChild(document.createTextNode(' (and no ')); const code = document.createElement('code'); code.textContent = 'innerHTML'; this.appendChild(code); this.appendChild(document.createTextNode(', because, come on...)')); const form = document.createElement('form'); this.insertAdjacentElement('afterend', form);";
+}
+
+code {
+  margin: 0 0.1rem;
+}
+
+code,
+output,
+button {
+  padding: 0.2rem;
+  border: 1px solid #ccc;
+  border-radius: 0.4rem;
+}
+
+form {
+  margin-top: 1.5rem;
+  gap: 0.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  content: "const out = document.createElement('output'); this.appendChild(out); const buttons = document.createElement('div'); buttons.id = 'buttons'; this.appendChild(buttons);";
+}
+
+output {
+  width: 100%;
+  text-align: right;
+  content: "window.out = this; this.textContent = '...';";
+}
+
+#buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.2rem;
+  content: "[1,2,3,4,5,6,7,8,9,0,'+','-','*','/','%','^','.','=','<-','C'].forEach((symbol)=>{const button = document.createElement('button'); button.style.setProperty('--symbol', `\"${symbol}\"`); this.appendChild(button);})";
+}
+
+button {
+  min-width: 1rem;
+  font: inherit;
+  background-color: #fafafa;
+  content: "const symbol = getComputedStyle(this).getPropertyValue('--symbol').slice(1, -1); this.textContent = symbol; this.type = 'button'; this.addEventListener('click', () => {if (symbol === '=') {try {out.textContent = eval(out.textContent.replaceAll('^', '**'));} catch {alert('Error');}} else if (symbol === '<-') {out.textContent = out.textContent.slice(0, -1); if (out.textContent.length === 0) {out.textContent = '...'}} else {if (['+','-','*','/','%','^','.'].includes(symbol)) {if (out.textContent === '...') {alert('Please put a number first');} else if (['+','-','*','/','%','^','.'].includes(out.textContent[out.textContent.length - 1])) {out.textContent = out.textContent.slice(0, -1) + symbol;} else {out.textContent += symbol;}} else if (symbol === 'C') {out.textContent = '...';} else if (out.textContent === '...') {out.textContent = symbol;} else {out.textContent += symbol;}}});";
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: #f0f0f0;
+}
